@@ -3,8 +3,10 @@ import ExpenseForm from './ExpenseForm/ExpenseForm';
 
 import ExpenseList from './ExpenseList/ExpenseList';
 import { v4 as uuidv4 } from 'uuid';
+import {connect} from 'react-redux';
+import * as actions from '../../store/actions/index';
 
-const Expense = () => {
+const Expense = (props) => {
     const initialState= [
         {'id': uuidv4(), 'expense': 'rent','amount': 100},
         {'id': uuidv4(), 'expense': 'rent2','amount': 120},
@@ -12,92 +14,107 @@ const Expense = () => {
     ];
     const [amount1,setAmount1] = useState('');
     const [expense1,setExpense1] = useState('');
-    const [expenseList,setExpenseList] = useState(initialState);
+    ///const [expenseList,setExpenseList] = useState();
     const [editMode,seteditMode] = useState(false);
-    const [tempEditItem,settempEditItem] = useState('');    
+    const [tempEditItemId,settempEditItemId] = useState('');
+//    const [shouldCancel,setshouldCancel] = useState(false);    
 
-    const submitForm = (amount, expense ) => {
-        console.log(amount);        
-        console.log(expense);
-        console.log(tempEditItem[0]);
+    const resetAllSetters = () => {
+        seteditMode(false);
+        setExpense1('');
+        setAmount1('');
+        settempEditItemId('');
+      //  setshouldCancel(false);
+    }
 
-        
+    const submitForm = (expense,amount) => {
+        console.log(amount1);        
+        console.log(expense1);
+        console.log(tempEditItemId);
+///        if(shouldCancel) return;
+
         let NewItem =null;
-        if(editMode){             
-//            NewItem= {...tempEditItem[0]};
-            expenseList.map(item => {
-                return item.id === tempEditItem[0].id ? { ...item, expense1, amount1 } : ({
-                    'id': uuidv4(), 
-                    'expense': expense1,
-                    'amount': amount1
-                } 
-                );
-              });
-            // NewItem = {
-            //     'id': tempEditItem[0] ? tempEditItem[0].id: uuidv4(), 
-            //     'expense': expense,
-            //     'amount': amount
-            // };
-        }else{  
+        if(editMode)
+        {
+             NewItem = {
+                'id': tempEditItemId, 
+                'expense': expense,
+                'amount': amount
+            };
+            console.log("submit:: edit: tempEditItem= ",NewItem);
+            props.editExpense(NewItem);            
+        }
+        else
+        {  
             NewItem = {
                 'id': uuidv4(), 
                 'expense': expense,
                 'amount': amount
             };
+            props.addexpense(NewItem);
         }
 
-        let cp = [...expenseList, NewItem];
-        setExpenseList(cp);    
-        seteditMode(false);
-
-
-        setExpense1('');
-        setAmount1('');
-        
-        settempEditItem('');
-
+        resetAllSetters();
     }
 
     
-    const deleteItem = (id) => {
-        let oldArray = [...expenseList];
-        console.log("id is :");
-        console.log(id);
-        
-        let tempArray= oldArray.filter(i=> i.id !== id);
-        console.log(tempArray);
-        setExpenseList(tempArray);
+    const deleteItem = (id) => { 
+        console.log("deleteItem: id is : ",id);
+        props.deleteExpense(id);
+        resetAllSetters();
     }
 
-    const editItem = (id,expense,amount) => {
-        let oldArray = [...expenseList];
-        console.log("id is :");
-        console.log(id);
-        
-        let editItem= oldArray.filter(i=> i.id === id);
-
-        console.log(editItem[0]);
-        setExpense1(editItem[0].expense);
-        setAmount1(editItem[0].amount);        
-        settempEditItem(editItem[0].id);
+    const editItem = (idEdit,expenseEdit,amountEdit) => {
+         let editItem = {
+            'id': idEdit, 
+            'expense': expenseEdit,
+            'amount': amountEdit
+        };   
+        console.log("editItem: item is : ",editItem);
+        setExpense1(editItem.expense);
+        setAmount1(editItem.amount);        
+        settempEditItemId(editItem.id);
         seteditMode(true);
-        //submitForm(editItem[0].expense,editItem[0].amount);
-        //editItem.expense=
-        //setExpenseList(tempArray);
+
+    }
+
+    const cancelForm = (canceled) =>{
+        console.log('CancelForm:  canceled = ',canceled);
+        //setshouldCancel(canceled);
+        // seteditMode(false);
+        // setExpense1('');
+        // setAmount1('');
+        // settempEditItemId('');
+
+        if(canceled)
+            resetAllSetters();
+
     }
 
     return (
     <div>
         <p>Expense</p>
         <div >
-            <ExpenseForm amount={amount1} expense={expense1} submited={(a, b) => submitForm(a, b)}/>
+            <ExpenseForm amount={amount1} expense={expense1} submited={(a_expense, b_amount) => submitForm(a_expense, b_amount)} cancel={cancelForm}/> 
         </div>
         <div >
-            <ExpenseList items={expenseList} deleteditem= {deleteItem} editItem={editItem}/>
+            <ExpenseList items={props.expenseList} deleteditem= {deleteItem} editItem={editItem}/>
         </div>        
     </div>
     );
 };
 
+const mapStateToProps = state => {
+    return { 
+      expenseList: state.expense.expenseList
+    }
+  };
 
-export default Expense;
+  const mapDispatchToProps = dispatch => {
+    return {
+        addexpense : (expenseItem) => dispatch(actions.addexpense(expenseItem)),
+        editExpense : (editItem) => dispatch(actions.editExpense(editItem)),
+        deleteExpense : (expenseItemId) => dispatch(actions.deleteExpense(expenseItemId)),
+       };
+  };
+export default connect(mapStateToProps,mapDispatchToProps)(Expense);

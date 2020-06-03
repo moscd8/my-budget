@@ -1,21 +1,19 @@
 import React , {useState} from 'react';
 import Item from '../Item/Item';
+import {connect} from 'react-redux';
 
 
 const ExpenseList = (props) => {
-
-
-    const [total,setTotal] = useState(0);
+ 
     let tempArray= [];
     let i=0;
-    let total2=0;
+    let totalAmount=0;
     let listToRender= null;
     if(props.items){
         for(let k in props.items){
             tempArray[i]= props.items[k];      
             console.log(tempArray[i]);
-            
-            total2 += +tempArray[i].amount;
+            totalAmount += +tempArray[i].amount;
             i++;
         }
 
@@ -32,10 +30,9 @@ const ExpenseList = (props) => {
     <div>
         <p>ExpenseList</p>
         {listToRender ? listToRender : null}
-        {total2>0 ? (<p> Total: {total2}</p>) : null}        
+        {totalAmount>0 ? (<p> Total: <strong>{totalAmount} $</strong></p>) : (<p> Total: <strong>0 $</strong></p>)}        
     </div>
     );
 };
-
-
+ 
 export default ExpenseList;

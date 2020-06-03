@@ -3,11 +3,34 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import {createStore ,  combineReducers ,applyMiddleware,compose} from 'redux';
 
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+import thunk from 'redux-thunk';
+import {Provider } from 'react-redux';
+import expense from './store/reducers/expense';
+
+
+const composeEnhancers = (process.env.NODE_ENV ==='development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
+
+const rootReducer = combineReducers({
+  expense : expense
+})
+
+const store = createStore ( 
+  rootReducer,
+  composeEnhancers(
+    applyMiddleware(thunk)
+  )
+);
+const app = (
+  <Provider store={store}>    
+    
+        <App /> 
+  </Provider>
+);
+
+
+ReactDOM.render(app,
   document.getElementById('root')
 );
 

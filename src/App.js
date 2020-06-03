@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Expense from './components/Expense/Expense';
+import {connect} from 'react-redux';
 
 function App() {
   return (
@@ -11,4 +12,12 @@ function App() {
   );
 }
 
-export default App;
+const mapStateToProps = state => {
+  return { 
+    expenseList: state.expense.expenseList
+  }
+};
+
+ 
+
+export default connect(mapStateToProps)(App);

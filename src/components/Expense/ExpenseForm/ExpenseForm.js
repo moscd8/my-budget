@@ -1,5 +1,4 @@
-import React , {useState} from 'react';
-
+import React , {useState} from 'react'; 
 
 const ExpenseForm = (props) => {
 
@@ -8,13 +7,20 @@ const ExpenseForm = (props) => {
 
     const submitForm = (e) => {
         e.preventDefault();
-        if(Localamount ==="" || !Localamount.trim() || Localexpense==="" || !Localexpense.trim()){
-            console.log('cannot submit Invalid input')
-            return;          
+        if(Localamount ==="" || !Localamount.trim() || Localexpense==="" || !Localexpense.trim()){           
+            console.log('cannot submit Invalid input');
+            return;
         }
-        props.submited(Localamount, Localexpense);
+
+        props.submited(Localexpense,Localamount);
         setLocalExpense('');
         setLocalAmount('');
+    }
+
+    const resetForm = (e) => {
+        setLocalExpense('');
+        setLocalAmount('');
+        props.cancel(true);
     }
 
 
@@ -29,12 +35,12 @@ const ExpenseForm = (props) => {
             <label htmlFor="amount"> amount </label> 
             <input type="number" name="amount" id="amount" placeholder="e.g 100" value={Localamount ? Localamount : props.amount} onChange={event => setLocalAmount(event.target.value)} />
 
-            
             <button  type="submit" >Submit </button>
+            <button type="reset" value="Reset" onClick={resetForm}>Reset</button>
         </form>
     </div>
     );
 };
-
-
+  
+ 
 export default ExpenseForm;
