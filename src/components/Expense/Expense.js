@@ -6,32 +6,27 @@ import { v4 as uuidv4 } from 'uuid';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 
-const Expense = (props) => {
-    const initialState= [
-        {'id': uuidv4(), 'expense': 'rent','amount': 100},
-        {'id': uuidv4(), 'expense': 'rent2','amount': 120},
-        {'id': uuidv4(), 'expense': 'rent3','amount': 140},        
-    ];
+import classes from './Expense.module.css';
+
+
+const Expense = (props) => { 
+
     const [amount1,setAmount1] = useState('');
     const [expense1,setExpense1] = useState('');
-    ///const [expenseList,setExpenseList] = useState();
     const [editMode,seteditMode] = useState(false);
     const [tempEditItemId,settempEditItemId] = useState('');
-//    const [shouldCancel,setshouldCancel] = useState(false);    
 
     const resetAllSetters = () => {
         seteditMode(false);
         setExpense1('');
         setAmount1('');
         settempEditItemId('');
-      //  setshouldCancel(false);
     }
 
     const submitForm = (expense,amount) => {
         console.log(amount1);        
         console.log(expense1);
         console.log(tempEditItemId);
-///        if(shouldCancel) return;
 
         let NewItem =null;
         if(editMode)
@@ -79,21 +74,15 @@ const Expense = (props) => {
     }
 
     const cancelForm = (canceled) =>{
-        console.log('CancelForm:  canceled = ',canceled);
-        //setshouldCancel(canceled);
-        // seteditMode(false);
-        // setExpense1('');
-        // setAmount1('');
-        // settempEditItemId('');
-
+        console.log('CancelForm:  ShouldCanceled = ',canceled);
         if(canceled)
             resetAllSetters();
 
     }
 
     return (
-    <div>
-        <p>Expense</p>
+    <div className={classes.Expense}>
+        <p>Budget Calculator</p>
         <div >
             <ExpenseForm amount={amount1} expense={expense1} submited={(a_expense, b_amount) => submitForm(a_expense, b_amount)} cancel={cancelForm}/> 
         </div>
@@ -106,7 +95,8 @@ const Expense = (props) => {
 
 const mapStateToProps = state => {
     return { 
-      expenseList: state.expense.expenseList
+      expenseList: state.expense.expenseList,
+      loading: state.expense.loading
     }
   };
 
@@ -117,4 +107,5 @@ const mapStateToProps = state => {
         deleteExpense : (expenseItemId) => dispatch(actions.deleteExpense(expenseItemId)),
        };
   };
+ 
 export default connect(mapStateToProps,mapDispatchToProps)(Expense);

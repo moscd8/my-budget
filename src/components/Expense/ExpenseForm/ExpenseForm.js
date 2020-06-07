@@ -1,4 +1,6 @@
 import React , {useState} from 'react'; 
+import {MdSend} from 'react-icons/md'; 
+import classes from './ExpenseForm.module.css';
 
 const ExpenseForm = (props) => {
 
@@ -25,8 +27,8 @@ const ExpenseForm = (props) => {
 
 
     return (
-    <div>
-        <p>ExpenseForm</p>
+    <div className={classes.ExpenseForm}>
+        <p>Add Expense</p>
         <form onSubmit={submitForm}>
             
             <label htmlFor="expense"> charge </label>             
@@ -34,9 +36,9 @@ const ExpenseForm = (props) => {
 
             <label htmlFor="amount"> amount </label> 
             <input type="number" name="amount" id="amount" placeholder="e.g 100" value={Localamount ? Localamount : props.amount} onChange={event => setLocalAmount(event.target.value)} />
-
-            <button  type="submit" >Submit </button>
-            <button type="reset" value="Reset" onClick={resetForm}>Reset</button>
+            <br/>
+            <button className={classes.Btn_Submit} type="submit" > Submit <MdSend className={classes.Icon}/>  </button>
+            <button className={classes.Btn_Reset} type="reset" value="Reset" onClick={resetForm}>Reset <MdSend  className={classes.Icon}/></button>
         </form>
     </div>
     );

@@ -1,0 +1,63 @@
+.Item {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 15px;
+    border: 2px solid black;
+    background-color: rgb(221, 203, 170);
+    text-align: center;
+    transition: all 0.2s linear;
+}
+
+.Item:hover{
+    border: 4px solid white;
+    background-color: rgb(80, 147, 179);
+    color: white;
+    transform: scale(1.05);
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.Item_Container{
+    display: block;
+    height: 50px;
+    font-size: 1.2rem;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    margin-top: 15px;
+}
+
+.Item_Container>span{
+    margin-left: 20px;
+}
+
+.Expense{
+    font-weight: bold;
+}
+
+.Amount{
+    background-color: rgba(238, 26, 26, 0.911);
+    
+}
+
+.Btn_Delete{
+    background-color: red;
+    color: white;
+    height: 30px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left: 5px;
+    /* margin-right: auto;
+    margin-left: auto; */
+}
+
+.Btn_Edit{
+    background-color: green;
+    color: white;
+    height: 30px;
+    text-transform: uppercase;
+    cursor: pointer;
+    margin-left: 10px;
+    margin-bottom: 10px;
+    
+    /* margin-right: auto;
+    margin-left: auto; */
+}

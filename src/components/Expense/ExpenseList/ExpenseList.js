@@ -1,7 +1,7 @@
 import React , {useState} from 'react';
 import Item from '../Item/Item';
-import {connect} from 'react-redux';
 
+import classes from './ExpenseList.module.css';
 
 const ExpenseList = (props) => {
  
@@ -27,8 +27,8 @@ const ExpenseList = (props) => {
     }
 
     return (
-    <div>
-        <p>ExpenseList</p>
+    <div className={classes.ExpenseList}>
+        <p>Expense List</p>
         {listToRender ? listToRender : null}
         {totalAmount>0 ? (<p> Total: <strong>{totalAmount} $</strong></p>) : (<p> Total: <strong>0 $</strong></p>)}        
     </div>

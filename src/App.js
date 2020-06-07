@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 function App() {
   return (
     <div className="App">
-      <h1>asdasd</h1>
       <Expense />
     </div>
   );
