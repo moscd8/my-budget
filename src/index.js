@@ -8,12 +8,15 @@ import {createStore ,  combineReducers ,applyMiddleware,compose} from 'redux';
 import thunk from 'redux-thunk';
 import {Provider } from 'react-redux';
 import expense from './store/reducers/expense';
+import auth from './store/reducers/auth';
 
+import {BrowserRouter} from 'react-router-dom';
 
 const composeEnhancers = (process.env.NODE_ENV ==='development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null) || compose;
 
 const rootReducer = combineReducers({
-  expense : expense
+  expense : expense,
+  auth: auth
 })
 
 const store = createStore ( 
@@ -24,8 +27,9 @@ const store = createStore (
 );
 const app = (
   <Provider store={store}>    
-    
+    <BrowserRouter>
         <App /> 
+    </BrowserRouter>
   </Provider>
 );
 

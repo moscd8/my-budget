@@ -1,4 +1,3 @@
- 
 
 export {
     addexpense,
@@ -6,3 +5,9 @@ export {
     editExpense
 }
 from './expense';
+
+export {
+    signup,
+    login
+}
+from './auth';

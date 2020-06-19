@@ -2,11 +2,25 @@ import React from 'react';
 import './App.css';
 import Expense from './components/Expense/Expense';
 import {connect} from 'react-redux';
+import {Route, Switch ,Redirect,BrowserRouter} from 'react-router-dom';
+import Auth from './components/Auth/auth';
 
-function App() {
+const App = (props) =>{
+
+ let routes= (
+  <Switch>
+    
+    <Route path="/auth" exact render={ (props)=> <Auth {...props}/> }/>    
+    <Route path="/expense" exact render={ (props)=> <Expense {...props}/> }/>
+    <Route path="/" exact render={ (props)=> <Auth {...props}/> }/>
+  </Switch>
+);
+
   return (
     <div className="App">
-      <Expense />
+      <BrowserRouter>
+      {routes}
+      </BrowserRouter>
     </div>
   );
 }
