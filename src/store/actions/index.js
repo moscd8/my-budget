@@ -2,12 +2,14 @@
 export {
     addexpense,
     deleteExpense,
-    editExpense
+    editExpense,
+    fetcExpenses
 }
 from './expense';
 
 export {
     signup,
-    login
+    login,
+    logout
 }
 from './auth';

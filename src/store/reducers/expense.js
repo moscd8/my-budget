@@ -4,9 +4,9 @@ import { v4 as uuidv4 } from 'uuid';
 
 const initialState= {
     expenseList: [
-        {'id': uuidv4(), 'expense': 'rent','amount': 10},
-        {'id': uuidv4(), 'expense': 'rent2','amount': 20},
-        {'id': uuidv4(), 'expense': 'rent3','amount': 40},        
+        // {'id': uuidv4(), 'expense': 'rent','amount': 10},
+        // {'id': uuidv4(), 'expense': 'rent2','amount': 20},
+        // {'id': uuidv4(), 'expense': 'rent3','amount': 40},        
     ], 
     loading: false
 };
@@ -50,17 +50,18 @@ const  addFail = (state, action) => {
     }
 }
 
-const deleteExpense = (state, action) => {
-        console.log('action.deleteItem =',action.deleteItem);
+// const deleteExpense = (state, action) => {
+//         console.log('action.deleteItem =',action.deleteItem);
 
-        let tempArray= state.expenseList.filter(i=> i.id !== action.deleteItem);
-        console.log(tempArray);
-        return {
-            ...state,
-            //loading:true,
-            expenseList : [...tempArray]
-        }
-};
+//         // let tempArray= state.expenseList.filter(i=> i.id !== action.deleteItem);
+//         // console.log(tempArray);
+//         // return {
+//         //     ...state,
+//         //     //loading:true,
+//         //     expenseList : [...tempArray]
+//         // }
+
+// };
 
 const editExpense = (state, action) => {
     console.log('action.editItem = ',action.editItem);
@@ -77,24 +78,111 @@ const editExpense = (state, action) => {
         expenseList : [...updatedArray]
     }
 };
+const addExpenseStart = (state, action) => {
+    return {
+        ...state,
+        loading: true,
+        error: null
+    }
+};
 
+const addexpenseSuccess = (state, action) => {
+    console.log('addexpenseSuccess');
+    const newList= [...state.expenseList,action.expenseItem];
+    return {
+        ...state,
+        expenseList:newList,
+        loading:false, 
+        error: null
+    }; 
+};
+
+const fetchexpenseStart = (state, action) => {
+    console.log('fetchexpenseStart');
+    return {
+        ...state,
+        loading:true, 
+        error: null
+    }; 
+};
+
+const fetchexpenseSuccess = (state, action) => {
+    console.log('fetchexpenseSuccess');
+    const newList= [...action.newExpenses];
+    return {
+        ...state,
+        loading:false, 
+        error: null,
+        expenseList:newList
+    }; 
+};
+
+const fetchexpenseFailed = (state, action) => {
+    console.log('fetchexpenseFailed');
+    return {
+        ...state,
+        loading:false, 
+        error: action.error,
+    }; 
+};
+ 
+
+
+const deletdexpenseSuccess = (state, action) => {
+    console.log('deletdexpenseSuccess');
+    ///const newList= [...action.newExpenses];
+    const oldList= [...state.expenseList];
+    const newList= oldList.filter(exp => exp.id!==action.deletedExpense);
+    return {
+        ...state,
+        loading:false, 
+        error: null,
+        expenseList:newList
+    }; 
+};
+
+const deletdexpenseFailed = (state, action) => {
+    console.log('deletdexpenseFailed');
+    return {
+        ...state,
+        loading:false, 
+        error: action.error,
+    }; 
+};
  
 
 const reducer = (state= initialState,action) => {
     switch (action.type) {
         case actionTypes.ADD_EXPENSE:
             return addExpense(state,action);
-        case actionTypes.ADD_EXPENSE_SUCCESS:
-            return addSuccess(state,action);
+        // case actionTypes.ADD_EXPENSE_SUCCESS:
+        //     return addSuccess(state,action);
         case actionTypes.ADD_EXPENSE_FAILED:
             return addFail(state,action); 
 
-        case actionTypes.DELETE_EXPENSE:
-            return deleteExpense(state,action); 
+        // case actionTypes.DELETE_EXPENSE:
+        //     return deleteExpense(state,action); 
         case actionTypes.EDIT_EXPENSE:
             return editExpense(state,action); 
                 
-            
+        case actionTypes.ADD_EXPENSE_START:
+            return addExpenseStart(state,action);
+        case actionTypes.ADD_EXPENSE_SUCCESS:
+            return addexpenseSuccess(state,action); 
+        case actionTypes.FETCH_EXPENSE_START:
+            return fetchexpenseStart(state,action); 
+                    
+        case actionTypes.FETCH_EXPENSE_SUCCESS:
+                return fetchexpenseSuccess(state,action); 
+        case actionTypes.FETCH_EXPENSE_FAILED:
+            return fetchexpenseFailed(state,action); 
+
+        case actionTypes.DELETE_EXPENSE_SUCCESS:
+            return deletdexpenseSuccess(state,action); 
+        case actionTypes.DELETE_EXPENSE_FAILED:
+            return deletdexpenseFailed(state,action); 
+                
+                    
         default: return state;
 
     }

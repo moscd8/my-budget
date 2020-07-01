@@ -1,8 +1,9 @@
-import React  , {useState} from 'react';
+import React  , {useState, useEffect} from 'react';
 import {connect} from 'react-redux';
 import * as actions from '../../store/actions/index';
 import { Redirect} from 'react-router-dom';
 import Spinner from '../Spinner/Spinner';
+import Backdrop from '../Backdrop/Backdrop';
 import classes from './Auth.module.css';
 
 const Auth =  (props) => {
@@ -10,6 +11,17 @@ const Auth =  (props) => {
     const [email, Setemail] = useState('');
     const [password, Setpassword] = useState('');  
     const [isSignup,setIsSignup]=useState(false);
+
+    // useEffect( ()  => {
+    //     props.onFetchExpenses(props.token,props.userId);
+    // },[]);
+
+    const showBackdropFunc = ()=> {
+        if(props.auth)
+            return (props.auth.loading);
+
+        return false;
+    }
 
     const SignIn= (event) => {
         event.preventDefault ();
@@ -27,35 +39,34 @@ const Auth =  (props) => {
     let loadingSpinner = null;
     if(props.auth)
         if(props.auth.loading){
-            loadingSpinner= <Spinner /> 
+            loadingSpinner= (<p> Loading ...<Spinner /> </p>); 
             console.log('loading')       
-    }
+        }else{
+            console.log('dont loading');
+        }
+
      let errorMsgRender= null;
-     console.log('error: ')
-//    console.log(props.auth.error)   
-    if(props.auth)
+     
+     if(props.auth)
         if(props.auth.error){
-         errorMsgRender=props.auth.error;
+            console.log('error: ')
+            errorMsgRender= (<p>props.auth.error</p>);
     };
-
-    let authredirect= null;
-    if(props.isAuthenticated){
-        console.log("isAuthenticated")
-        authredirect= <Redirect to='/expense'/>
-    }
-
+  
     return (
             <div className={classes.AuthMain}>
+                
             <div >
                 <p> {isSignup ? 'SIGNUP' : 'LOGIN'} </p>
                 <label className={classes.Switch}>
                     <input  className={!isSignup ?  classes.Login : classes.Register} type="checkbox" value={isSignup ?  'Regiter' : 'Login'} onClick={() => setIsSignup(!isSignup)}/>       
                     <span className={classes.Sliderround}></span>
                 </label>
+                {errorMsgRender  ? ( <p> {errorMsgRender}</p>) : null}
             </div>
 
-            {authredirect}
-            {errorMsgRender  ? ( <p> {errorMsgRender}</p>) : null}
+            {/* {authredirect} */}
+            
              <form onSubmit={SignIn} className={classes.Form}>
             <label className={classes.Label}>
                 Name:
@@ -70,9 +81,9 @@ const Auth =  (props) => {
             <input  className={classes.Submit} type="submit" value="Submit" />
 
             
-            {/* <Backdrop show={showBackdropFunc() } >
+            <Backdrop show={showBackdropFunc() } >
             {loadingSpinner}
-            </Backdrop>   */}
+            </Backdrop>  
             {loadingSpinner}
         </form>
         </div>
@@ -81,8 +92,9 @@ const Auth =  (props) => {
 }
 const mapStateToProps = state => {
     return { 
+      auth: state.auth,
       isAuthenticated: state.auth.token!=null,
-      loading: state.auth.loading,
+    //   loading: state.auth.loading,
       error: state.auth.error
     }
   };

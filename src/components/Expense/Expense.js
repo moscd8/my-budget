@@ -1,4 +1,4 @@
-import React  , {useState} from 'react';
+import React  , {useState,useEffect} from 'react';
 import ExpenseForm from './ExpenseForm/ExpenseForm';
 
 import ExpenseList from './ExpenseList/ExpenseList';
@@ -15,6 +15,10 @@ const Expense = (props) => {
     const [expense1,setExpense1] = useState('');
     const [editMode,seteditMode] = useState(false);
     const [tempEditItemId,settempEditItemId] = useState('');
+
+    useEffect( ()  => {
+        props.onFetchExpenses(props.token,props.userId);
+    },[]);
 
     const resetAllSetters = () => {
         seteditMode(false);
@@ -37,16 +41,17 @@ const Expense = (props) => {
                 'amount': amount
             };
             console.log("submit:: edit: tempEditItem= ",NewItem);
-            props.editExpense(NewItem);            
+            props.editExpense(NewItem, props.token);            
         }
         else
         {  
             NewItem = {
                 'id': uuidv4(), 
                 'expense': expense,
-                'amount': amount
+                'amount': amount,
+                'userId': props.userId
             };
-            props.addexpense(NewItem);
+            props.addexpense(NewItem,props.token);
         }
 
         resetAllSetters();
@@ -55,7 +60,7 @@ const Expense = (props) => {
     
     const deleteItem = (id) => { 
         console.log("deleteItem: id is : ",id);
-        props.deleteExpense(id);
+        props.deleteExpense(id,props.token);
         resetAllSetters();
     }
 
@@ -83,6 +88,7 @@ const Expense = (props) => {
     return (
     <div className={classes.Expense}>
         <p>Budget Calculator</p>
+        {props.test}
         <div >
             <ExpenseForm amount={amount1} expense={expense1} submited={(a_expense, b_amount) => submitForm(a_expense, b_amount)} cancel={cancelForm}/> 
         </div>
@@ -96,15 +102,18 @@ const Expense = (props) => {
 const mapStateToProps = state => {
     return { 
       expenseList: state.expense.expenseList,
-      loading: state.expense.loading
+      loading: state.expense.loading,
+      token: state.auth.token,
+      userId: state.auth.userId
     }
   };
 
   const mapDispatchToProps = dispatch => {
     return {
-        addexpense : (expenseItem) => dispatch(actions.addexpense(expenseItem)),
-        editExpense : (editItem) => dispatch(actions.editExpense(editItem)),
-        deleteExpense : (expenseItemId) => dispatch(actions.deleteExpense(expenseItemId)),
+        addexpense : (expenseItem,token) => dispatch(actions.addexpense(expenseItem,token)),
+        editExpense : (editItem,token) => dispatch(actions.editExpense(editItem,token)),
+        deleteExpense : (expenseItemId,token) => dispatch(actions.deleteExpense(expenseItemId,token)),
+        onFetchExpenses : (token,userId) => dispatch(actions.fetcExpenses(token,userId))
        };
   };
  
