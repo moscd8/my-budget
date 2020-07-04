@@ -20,6 +20,7 @@ const ExpenseList = (props) => {
         listToRender= (
             tempArray.map(item => (
                 <div key={item.id}>
+                    {    console.log('ExpenseList: item.id,item.expense,item.amount',props.id,props.expense,props.amount)}
                     <Item  expense={item.expense} amount={item.amount} id={item.id} handleDelete={props.deleteditem} handleEdit={props.editItem}/>                    
                 </div>
             ))

@@ -17,6 +17,12 @@ const Navigation  = (props)=> {
         </li>
         <li>
           <Link to={ROUTES.EXPENSE}>EXPENSE</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.STATISTICS}>STATISTICS</Link>
+        </li>
+        <li>
+          <Link to={ROUTES.HISTORY}>HISTORY</Link>
         </li>         
       </ul>
     );

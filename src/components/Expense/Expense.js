@@ -70,7 +70,7 @@ const Expense = (props) => {
             'expense': expenseEdit,
             'amount': amountEdit
         };   
-        console.log("editItem: item is : ",editItem);
+        console.log("Expense: editItem: item is : ",editItem);
         setExpense1(editItem.expense);
         setAmount1(editItem.amount);        
         settempEditItemId(editItem.id);
@@ -94,7 +94,7 @@ const Expense = (props) => {
         </div>
         <div >
             <ExpenseList items={props.expenseList} deleteditem= {deleteItem} editItem={editItem}/>
-        </div>        
+        </div>       
     </div>
     );
 };

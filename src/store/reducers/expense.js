@@ -128,7 +128,7 @@ const fetchexpenseFailed = (state, action) => {
  
 
 
-const deletdexpenseSuccess = (state, action) => {
+const deleteExpenseSuccess = (state, action) => {
     console.log('deletdexpenseSuccess');
     ///const newList= [...action.newExpenses];
     const oldList= [...state.expenseList];
@@ -141,7 +141,7 @@ const deletdexpenseSuccess = (state, action) => {
     }; 
 };
 
-const deletdexpenseFailed = (state, action) => {
+const deleteExpenseFailed = (state, action) => {
     console.log('deletdexpenseFailed');
     return {
         ...state,
@@ -150,6 +150,29 @@ const deletdexpenseFailed = (state, action) => {
     }; 
 };
  
+const editExpenseSuccess = (state, action) => {
+    console.log('editExpenseSuccess');
+    ///const newList= [...action.newExpenses];
+    const oldList= [...state.expenseList];
+    const newList= oldList.filter(exp => exp.id!==action.editedItem.id);
+    newList.push(action.editedItem);
+
+    return {
+        ...state,
+        loading:false, 
+        error: null,
+        expenseList:newList
+    }; 
+};
+
+const editExpenseFailed = (state, action) => {
+    console.log('editExpenseFailed');
+    return {
+        ...state,
+        loading:false, 
+        error: action.error,
+    }; 
+};
 
 const reducer = (state= initialState,action) => {
     switch (action.type) {
@@ -178,11 +201,15 @@ const reducer = (state= initialState,action) => {
             return fetchexpenseFailed(state,action); 
 
         case actionTypes.DELETE_EXPENSE_SUCCESS:
-            return deletdexpenseSuccess(state,action); 
+            return deleteExpenseSuccess(state,action); 
         case actionTypes.DELETE_EXPENSE_FAILED:
-            return deletdexpenseFailed(state,action); 
-                
-                    
+            return deleteExpenseFailed(state,action); 
+
+        case actionTypes.EDIT_EXPENSE_SUCCESS:
+            return editExpenseSuccess(state,action); 
+        case actionTypes.EDIT_EXPENSE_FAILED:
+            return editExpenseFailed(state,action); 
+                                                    
         default: return state;
 
     }

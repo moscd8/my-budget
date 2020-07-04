@@ -1,5 +1,34 @@
 .ExpenseList{
     background-color: wheat;
+    max-width: 750px;
+    margin: 40px auto;
+    padding-bottom: 20px;
+}
+
+.ExpenseList > p {
+    font-size: 1.5rem;
+    text-align: left;
+    margin-left: 20px;
+    text-transform: uppercase;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+    padding-top: 20px;
+    /* color: rgba(31, 91, 148, 0.753); */
+    
+}
+
+.ExpenseList > p:last-of-type {
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-style: italic;
+    padding-top: 20px;
+}
+
+
+/* .ExpenseList{
+    background-color: wheat;
     max-width: 900px;
     margin-left: auto;
     margin-right: auto;    
@@ -23,4 +52,4 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-style: italic;
     padding-top: 20px;
-}
+} */

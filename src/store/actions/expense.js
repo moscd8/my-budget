@@ -155,22 +155,37 @@ export const editExpense = (editItem, token) => {
               Authorization: "Bearer " + token            
         }        
         let url = '/expenses/'+editItem.id;
-        let formatedReq= [
-            {
-                "propName": editItem.expense, "value": "UPDATED"
-            }
-        ]
-        axios.patch(url, formatedReq,{headers:headers})
+        // let formatedReq= [
+        //     {
+        //         "propName": editItem.expense, "value": "UPDATED"
+        //     }
+        // ]
+        axios.patch(url, editItem,{headers:headers})
         .then(result => {
             console.log('editExpense Response: ',result);
             if(result.status===200)
             {
-                 ///dispatch(deleteExpenseSuccess(expenseItemIdToDelete));
+                dispatch(editExpenseSuccess(editItem));
             }
         })
         .catch(error=> {
             console.log(error);
-  //          dispatch(deleteExpenseFailed(error));
+            dispatch(editExpenseFailed(error));
         })
     }
+}
+
+export const editExpenseSuccess = (editedItem)=> { //V
+    console.log('editExpenseSuccess');
+    return{
+        type: actionTypes.EDIT_EXPENSE_SUCCESS,
+        editedItem: editedItem
+    };
+}
+export const editExpenseFailed = (error)=> { //V
+    console.log('editExpenseFailed');
+    return{
+        type: actionTypes.EDIT_EXPENSE_FAILED,
+        error: error
+    };
 }

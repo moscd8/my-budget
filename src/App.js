@@ -8,6 +8,8 @@ import Navigation from './components/Navigation/Navigation ';
 import * as actions from './store/actions/auth';
 import Logout  from './components/Auth/Logout/Logout'
 
+import Statistics from './components/Expense/Statistics/Statistics';
+
 const App = (props) =>{
 
   useEffect(() => {
@@ -31,6 +33,8 @@ if(props.isAuthenticated){
       <Route path="/auth" exact render={ (props)=> <Auth {...props}/> }/>    
       <Route path="/expense" exact render={ (props)=> <Expense {...props}/> }/>
       <Route path="/logout" exact render={ (props)=> <Logout {...props}/> }/>
+      <Route path="/statistics" exact render={ (props)=> <Statistics {...props}/> }/>
+      <Route path="/history" exact render={ (props)=> <Logout {...props}/> }/>
       <Route path="/" exact render={ (props)=> <Expense {...props}/> }/>
       {/*  */}
       <Redirect to="/"/> 

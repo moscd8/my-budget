@@ -4,7 +4,7 @@ import classes from './Item.module.css';
 
 const Item = (props) => {
 
-    
+    console.log('Item: props.id,props.expense,props.amount',props.id,props.expense,props.amount);
     return (
     <div className={classes.Item}>
         <div className={classes.Item_Container}>
