@@ -210,8 +210,8 @@ export const fetcStatisticsExpenses = (token,userId) => {
                  console.log('fetcStatisticsExpenses: expenses_array ',expenses_array);
                 // let newArray= expenses_array.filter(exp=>exp.userId===userId);
                 // console.log('fetc Response: newArray ',newArray);
-                 if(expenses_array)
-                     dispatch(fetcStatisticsExpensesSuccess(expenses_array));
+                  if(expenses_array)
+                      dispatch(fetcStatisticsExpensesSuccess(expenses_array));
             }
         })
         .catch(error=> {

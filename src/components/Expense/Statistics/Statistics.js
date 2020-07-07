@@ -50,6 +50,22 @@ const Statistics = (props) => {
         [],
         [],
         [],
+        [],
+        []
+    ];
+    const sum_expense_by_months_array= [        
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
+        [],
         []
     ];
 
@@ -67,7 +83,7 @@ const Statistics = (props) => {
                 console.log('parseInt(index)=',parseInt(index));
                 
                 month.expenses.map(exp=>{
-                    sum+=exp.amount;
+                    sum += exp.amount;
                     expense_by_months_array[parseInt(index)].push(
                         {
                             // 'data':{
@@ -78,9 +94,11 @@ const Statistics = (props) => {
                             //         },
                             // 'sum':sum
                         });
-                    console.log('expense_by_months_array[parseInt(index)]= ',expense_by_months_array[parseInt(index)])
+                   
+                        console.log('expense_by_months_array[parseInt(index)]= ',expense_by_months_array[parseInt(index)]);                
                 });
                 // expense_by_months_array[parseInt(index)].push({'sum':sum});
+                sum_expense_by_months_array[parseInt(index)].push(sum);
             }
 
             // sum+=exp.amount;
@@ -108,17 +126,20 @@ const Statistics = (props) => {
     let month_slideViews= [];
     if(expense_by_months_array){
         // if(expense_by_months_array)
+        let temp_sum=0;
         console.log('expense_by_months_array ', expense_by_months_array);
         expense_by_months_array.map((month,index)=> {
             if(expense_by_months_array[index].length>0){     
                 console.log('expense_by_months_array map() month', month);
+                temp_sum+=month.value;
+                let t= sum_expense_by_months_array[index] ?  sum_expense_by_months_array[index]: 0;
                 month_slideViews.push(
                     <div key={index}>
                     
                         <div className={classes.Graph}>
                             <h1>Month {index}</h1>
                             <MyResponsivePie data={month} />
-                            {/* <p>Total {month.sum} $</p> */}
+                            <p>Total {t} $</p>
                         </div>
                     </div>                 
                     );
