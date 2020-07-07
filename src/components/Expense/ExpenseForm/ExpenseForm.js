@@ -6,6 +6,7 @@ const ExpenseForm = (props) => {
 
     const [Localexpense,setLocalExpense] = useState(props.expense);
     const [Localamount,setLocalAmount] = useState(props.amount);
+    const [Localmonth,setLocalMonth] = useState(props.month);
 
     // useEffect(() => {
     //     setLocalExpense(props.expense);
@@ -14,12 +15,12 @@ const ExpenseForm = (props) => {
 
     const submitForm = (e) => {
         e.preventDefault();
-        if(Localamount ==="" || !Localamount.trim() || Localexpense==="" || !Localexpense.trim()){           
+        if(Localamount ==="" || !Localamount.trim() || Localexpense==="" || !Localexpense.trim() || Localmonth==="" || !Localmonth.trim()){           
             console.log('cannot submit Invalid input');
             return;
         }
 
-        props.submited(Localexpense,Localamount);
+        props.submited(Localexpense,Localamount,Localmonth);
         setLocalExpense('');
         setLocalAmount('');
     }
@@ -27,11 +28,16 @@ const ExpenseForm = (props) => {
     const resetForm = (e) => {
         setLocalExpense('');
         setLocalAmount('');
+        setLocalMonth('');
         props.cancel(true);
     }
     
 
+    const selectionPrint = (e) => { 
+        console.log('selectionPrint Value: ',e.target.value);        
+        setLocalMonth(e.target.value);
 
+    }
     return (
     <div className={classes.ExpenseForm}>
         {/* <p>Add Expense</p> */}
@@ -44,6 +50,26 @@ const ExpenseForm = (props) => {
             <div className={classes.Input}>
                 <label htmlFor="amount"> Amount </label> 
                 <input type="number" name="amount" id="amount" placeholder="e.g 100" value={Localamount ? Localamount : props.amount} onChange={event => setLocalAmount(event.target.value)} />                 
+            </div>
+            <div className={classes.Input}>
+                <label htmlFor="date"> Month </label> 
+                {/* <input type="number" name="date" id="date" placeholder="e.g 100" value={Localamount ? Localamount : props.amount} onChange={event => setLocalAmount(event.target.value)} />                  */}
+            
+                <select id="date" name="date" onChange={event => selectionPrint(event)}>
+                    <option value="">Select Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                </select>
             </div>
             
 

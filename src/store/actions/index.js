@@ -3,7 +3,8 @@ export {
     addexpense,
     deleteExpense,
     editExpense,
-    fetcExpenses
+    fetcExpenses,
+    fetcStatisticsExpenses
 }
 from './expense';
 

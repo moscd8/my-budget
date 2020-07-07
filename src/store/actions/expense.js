@@ -189,3 +189,56 @@ export const editExpenseFailed = (error)=> { //V
         error: error
     };
 }
+
+
+export const fetcStatisticsExpenses = (token,userId) => {
+    console.log('fetcStatisticsExpenses');
+    return dispatch => {
+        dispatch(fetcStatisticsExpensesStart());
+        let config = {
+            headers: {
+              Authorization: "Bearer " + token
+            }
+          }
+          let url='/expenses/stats/'+userId; 
+        axios.get(url,{headers:config.headers})
+        .then(result=> {
+            if(result.status===200)
+            {
+                console.log(result);
+                 let expenses_array= result.data.statisticsExpenses;
+                 console.log('fetcStatisticsExpenses: expenses_array ',expenses_array);
+                // let newArray= expenses_array.filter(exp=>exp.userId===userId);
+                // console.log('fetc Response: newArray ',newArray);
+                 if(expenses_array)
+                     dispatch(fetcStatisticsExpensesSuccess(expenses_array));
+            }
+        })
+        .catch(error=> {
+            console.log(error);
+            dispatch(fetcStatisticsExpensesFailed(error));
+        })
+    }
+};
+
+
+export const fetcStatisticsExpensesStart = ()=> { //V
+    console.log('fetcStatisticsExpensesStart');
+    return{
+        type: actionTypes.FETCH_STATISTICS_EXPENSE_START
+    };
+}
+export const fetcStatisticsExpensesSuccess = (ExpensesFromServer)=> { //V
+    console.log('fetcStatisticsExpensesSuccess');
+    return{
+        type: actionTypes.FETCH_STATISTICS_EXPENSE_SUCCESS,
+        newExpenses: ExpensesFromServer
+    };
+}
+export const fetcStatisticsExpensesFailed = (error)=> { //V
+    console.log('fetcStatisticsExpensesFailed');
+    return{
+        type: actionTypes.FETCH_STATISTICS_EXPENSE_FAILED,
+        error: error
+    };
+}

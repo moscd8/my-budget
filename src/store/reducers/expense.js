@@ -174,6 +174,37 @@ const editExpenseFailed = (state, action) => {
     }; 
 };
 
+
+const fetchStatisticsExpenseStart = (state, action) => {
+    console.log('fetchStatisticsExpenseStart');
+    return {
+        ...state,
+        loading:true, 
+        error: null
+    }; 
+};
+
+const fetchStatisticsExpenseSuccess = (state, action) => {
+    console.log('fetchStatisticsExpenseSuccess');
+    const newList= [...action.newExpenses];
+    return {
+        ...state,
+        loading:false, 
+        error: null,
+        statsExpenseList: newList
+        // expenseList:newList
+    }; 
+};
+
+const fetcheStatisticsEpenseFailed = (state, action) => {
+    console.log('fetcheStatisticsEpenseFailed');
+    return {
+        ...state,
+        loading:false, 
+        error: action.error,
+    }; 
+};
+
 const reducer = (state= initialState,action) => {
     switch (action.type) {
         case actionTypes.ADD_EXPENSE:
@@ -192,9 +223,9 @@ const reducer = (state= initialState,action) => {
             return addExpenseStart(state,action);
         case actionTypes.ADD_EXPENSE_SUCCESS:
             return addexpenseSuccess(state,action); 
+       
         case actionTypes.FETCH_EXPENSE_START:
-            return fetchexpenseStart(state,action); 
-                    
+            return fetchexpenseStart(state,action);                     
         case actionTypes.FETCH_EXPENSE_SUCCESS:
                 return fetchexpenseSuccess(state,action); 
         case actionTypes.FETCH_EXPENSE_FAILED:
@@ -209,7 +240,14 @@ const reducer = (state= initialState,action) => {
             return editExpenseSuccess(state,action); 
         case actionTypes.EDIT_EXPENSE_FAILED:
             return editExpenseFailed(state,action); 
-                                                    
+
+        case actionTypes.FETCH_STATISTICS_EXPENSE_START:
+            return fetchStatisticsExpenseStart(state,action);                     
+        case actionTypes.FETCH_STATISTICS_EXPENSE_SUCCESS:
+                return fetchStatisticsExpenseSuccess(state,action); 
+        case actionTypes.FETCH_STATISTICS_EXPENSE_FAILED:
+            return fetcheStatisticsEpenseFailed(state,action); 
+    
         default: return state;
 
     }

@@ -13,6 +13,7 @@ const Expense = (props) => {
 
     const [amount1,setAmount1] = useState('');
     const [expense1,setExpense1] = useState('');
+    const [month1,setMonth] = useState('');
     const [editMode,seteditMode] = useState(false);
     const [tempEditItemId,settempEditItemId] = useState('');
 
@@ -24,21 +25,24 @@ const Expense = (props) => {
         seteditMode(false);
         setExpense1('');
         setAmount1('');
+        setMonth('');
         settempEditItemId('');
     }
 
-    const submitForm = (expense,amount) => {
+    const submitForm = (expense,amount, month_selected) => {
         console.log(amount1);        
         console.log(expense1);
         console.log(tempEditItemId);
-
+        console.log(month_selected);
+  
         let NewItem =null;
         if(editMode)
         {
              NewItem = {
                 'id': tempEditItemId, 
                 'expense': expense,
-                'amount': amount
+                'amount': amount, 
+                'month': month_selected
             };
             console.log("submit:: edit: tempEditItem= ",NewItem);
             props.editExpense(NewItem, props.token);            
@@ -49,7 +53,8 @@ const Expense = (props) => {
                 'id': uuidv4(), 
                 'expense': expense,
                 'amount': amount,
-                'userId': props.userId
+                'userId': props.userId,
+                'month': month_selected
             };
             props.addexpense(NewItem,props.token);
         }
@@ -90,7 +95,7 @@ const Expense = (props) => {
         <p>Budget Calculator</p>
         {props.test}
         <div >
-            <ExpenseForm amount={amount1} expense={expense1} submited={(a_expense, b_amount) => submitForm(a_expense, b_amount)} cancel={cancelForm}/> 
+            <ExpenseForm amount={amount1} expense={expense1} month={month1} submited={(a_expense, b_amount,c_month) => submitForm(a_expense, b_amount, c_month)} cancel={cancelForm}/> 
         </div>
         <div >
             <ExpenseList items={props.expenseList} deleteditem= {deleteItem} editItem={editItem}/>
