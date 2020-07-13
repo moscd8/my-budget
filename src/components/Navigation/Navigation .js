@@ -43,10 +43,9 @@ const Navigation  = (props)=> {
     ): null;
     
     return(
-        <div className={ classes.Navigation}>
-          
-        {props.isAuthenticated ? authLinks: unAuthLinks} 
-      </div>
+        <div className={classes.Navigation}> 
+          {props.isAuthenticated ? authLinks: unAuthLinks}
+        </div>
     )
 };
 const mapStateToProps = state =>{

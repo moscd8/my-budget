@@ -1,16 +1,39 @@
 .Statistics_Container{
     height: 100vh;
+    background-image: url('../../../shered/images/image6.jpg');
+    min-height: 900px;
+    background-size: cover;
+    background-position: center;
 }
 
 .Statistics_Container p {
     color: white;
+    box-shadow: whitesmoke;
     font-size: 1.5rem;
+    text-align: center;
+    font-weight: bold;
 
+    text-shadow: 2px 2px black;
+    z-index: 10;
+    /* background-color: rgb(188, 200, 224); */
+    text-decoration-color: darkgreen;
+    /* max-width: 1.5rem; */
 }
  .Graph{
     margin-left: auto;
     margin-right: auto;
     height: 500px;
-    width: 500px;
+    /* width: 500px; */
     background-color: white;
+}
+
+.Graph > p {
+    margin-bottom: 50px;
+    background-color: cornflowerblue;
+    /* width: 10%; */
+    text-align: center;
+}
+.Graph_container{
+    background-color: white;
+    margin-bottom: 50px;
 }

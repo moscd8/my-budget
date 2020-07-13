@@ -1,8 +1,10 @@
 .ExpenseList{
-    background-color: wheat;
+    /* background-color: wheat; */
+    background-color: rgb(138, 135, 126);
     max-width: 750px;
     margin: 40px auto;
     padding-bottom: 20px;
+    opacity: 0.8;
 }
 
 .ExpenseList > p {

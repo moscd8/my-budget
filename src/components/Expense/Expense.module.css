@@ -1,4 +1,12 @@
- 
+.Expense{
+    background-image: url('../../shered/images/image2.jpg');
+    height: 100%;
+    min-height: 900px;
+    background-size: cover;
+    background-position: center;
+    /* opacity: 0.5; */
+} 
+
 .Expense > p{
     font-size: 1.5rem;
     text-align: center;
