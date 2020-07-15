@@ -1,6 +1,7 @@
 .ExpenseList{
     /* background-color: wheat; */
-    background-color: rgb(138, 135, 126);
+    /* background-color: rgb(138, 135, 126); */
+    background-color: #727170;
     max-width: 750px;
     margin: 40px auto;
     padding-bottom: 20px;
@@ -16,7 +17,7 @@
     font-style: italic;
     padding-top: 20px;
     /* color: rgba(31, 91, 148, 0.753); */
-    
+    color: white;
 }
 
 .ExpenseList > p:last-of-type {

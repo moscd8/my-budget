@@ -11,14 +11,16 @@ const Statistics = (props) => {
 
     const [temp_data2_data2, setTemp_data2_data] = useState ('');
     let temp_data2= null;
+    let month_array= ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+
     useEffect( ()  => {
         props.onFetchStatisticsExpenses(props.token,props.userId);
     },[]);
 
 
-    useEffect( ()  => {
-        clac_func();
-    },[props.statsExpenseList, temp_data2]);
+    // useEffect( ()  => {
+    //     clac_func();
+    // },[props.statsExpenseList, temp_data2]);
 
 
     const data = [
@@ -116,7 +118,14 @@ const Statistics = (props) => {
                 });
                  
                 sum_expense_by_months_array[parseInt(index)].push(sum);
-               
+                let obj= {
+                  "x": parseInt(index),
+                  "y": sum
+              };
+              console.log('obj',obj);
+              
+              temp_data2_data.push(obj);
+
                 // expense_by_months_array_Bar[parseInt(index)].push(
                 //     {
                 //         "x": index,
@@ -140,13 +149,15 @@ const Statistics = (props) => {
                 // });
                
 
-                }});
+
+                }
+              });
  
     }
 
     let month_slideViews= [];
     let month_slideViews2= null;
-    
+   
     if(expense_by_months_array){
         // if(expense_by_months_array)
         let temp_sum=0;
@@ -156,14 +167,12 @@ const Statistics = (props) => {
                 console.log('expense_by_months_array map() month,data', month,data);
                 temp_sum+=month.value;
                 let calc_sum= sum_expense_by_months_array[index] ?  sum_expense_by_months_array[index]: 0;
-                month_slideViews.push(
-                    <div key={index}>                    
-                        <div className={classes.Graph}>
-                            <h1>Month {index}</h1>
+                month_slideViews.push(                    
+                        <div className={classes.Graph} key={index}>
+                            <h1>Month: {month_array[index]}</h1>
                             <MyResponsivePie data={month} />
-                            <p>Total {calc_sum} $</p>
-                        </div>
-                    </div>                 
+                            <p className={classes.Sum}>Total {calc_sum} $</p>
+                        </div>         
                     );
 
 
@@ -184,34 +193,10 @@ const Statistics = (props) => {
                     }
             }
             }
-            );
- 
-            
-
-        // if(expense_by_months_array_Bar){
-        //     let temp= expense_by_months_array_Bar[0].data;
-        
-            // // if(temp_data2 && temp_data2_data){
-            // //     console.log('temp_data2,temp_data2_data ',temp_data2, temp_data2_data);
-                
-
-                
-            // //     temp_data2.push(temp_data2_data);
-            // //     let j=1;
-            // //         month_slideViews2.push(
-            // //         <div key={j++}>                    
-            // //         <div className={classes.Graph}>
-            // //             <h1>Graph {j}</h1>
-            // //             <MyResponsiveLine data={temp_data2} />
-            // //         </div>
-            // //     </div>                 
-            // //        )
-
-            // //  //   }
-            // // }
+            ); 
 
         };
-
+/* */
     let temp_data= 
     [
         {
@@ -490,24 +475,30 @@ const Statistics = (props) => {
    // if(expense_by_months_array_Bar){
    //     let temp= expense_by_months_array_Bar[0].data;
    
-    // // if(temp_data2 && temp_data2_data){
-    // //     console.log('temp_data2,temp_data2_data ',temp_data2, temp_data2_data);
+    // if(temp_data2 && temp_data2_data && temp_data2_data.length>0){
+    //     console.log('temp_data2,temp_data2_data ',temp_data2, temp_data2_data);
         
 
-        
-    // //     temp_data2.push(temp_data2_data);
-    // //     let j=1;
-    // //         month_slideViews2.push(
-    // //         <div key={j++}>                    
-    // //         <div className={classes.Graph}>
-    // //             <h1>Graph {j}</h1>
-    // //             <MyResponsiveLine data={temp_data2} />
-    // //         </div>
-    // //     </div>                 
-    // //        )
+    //     month_slideViews2=[];
+    //     let newObj= {
+    //       ...temp_data2,
+    //       ...temp_data2_data
 
-    // //  //   }
-    // // }
+    //     };
+    //     //temp_data2.push(temp_data2_data);
+    //     let j=1;
+    //         month_slideViews2.push(
+    //         <div key={j++}>                    
+    //         <div className={classes.Graph}>
+    //             <h1>Graph {j}</h1>
+    //             <MyResponsiveLine data={newObj} />
+    //         </div>
+    //     </div>                 
+    //        );
+
+    //        console.log('newObj ,' ,newObj);
+    //  //   }
+    // }
 
     const clac_func= () => {
         console.log("clac_func");
@@ -592,12 +583,16 @@ const Statistics = (props) => {
 
                </div>
                
-              {month_slideViews2 ? (<div className={classes.Graph_container}>
+              {/* {month_slideViews2 ? (<div className={classes.Graph_container}>
                 <SlideView>
                 {month_slideViews2 ?  month_slideViews2: (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
               </SlideView>              
-               </div>) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
-               
+               </div>) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)} */}
+               {month_slideViews2 ? (
+                <SlideView>
+                {month_slideViews2 ?  month_slideViews2: (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
+              </SlideView>              
+               ) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
 
 
              {/* <p> Statistics</p>
