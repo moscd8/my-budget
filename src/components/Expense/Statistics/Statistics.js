@@ -9,9 +9,7 @@ import SlideView from '../../SlideView/SlideView';
 
 const Statistics = (props) => {
 
-    const [temp_data2_data2, setTemp_data2_data] = useState ('');
-    let temp_data2= null;
-    let month_array= ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+   
 
     useEffect( ()  => {
         props.onFetchStatisticsExpenses(props.token,props.userId);
@@ -21,22 +19,7 @@ const Statistics = (props) => {
     // useEffect( ()  => {
     //     clac_func();
     // },[props.statsExpenseList, temp_data2]);
-
-
-    const data = [
-        // {
-        //     id: "css",
-        //     label: "css",
-        //     value: 313,
-        //     color: "hsl(174, 70%, 50%)"
-        //   },
-        //   {
-        //     id: "make",
-        //     label: "make",
-        //     value: 375,
-        //     color: "hsl(207, 70%, 50%)"
-        //   }
-        ]; 
+ 
     let colors= ["rgb(209, 9, 9)","rgb(83, 36, 128)","rgb(34, 131, 138)","rgb(23, 184, 90)","rgb(14, 82, 184)","rgb(177, 33, 88)"];
     const expense_by_months_array= [        
         [],
@@ -52,8 +35,20 @@ const Statistics = (props) => {
         [],
         [],
         []
-    ];  
-      temp_data2= 
+    ];   
+    let temp_data2_data = [];
+    let SecondGraph=[];
+    let SecondGraphDiv=[];
+    
+    let data_array= [];
+    const expense_by_months_array_Bar= 
+    [
+        ];
+    const sum_expense_by_months_array= [
+      [],[],[],[],[],[],[],[],[],[],[],[],[]
+    ];
+    
+    let temp_data2= 
     [
         {
           "id": "My Data ",
@@ -66,137 +61,11 @@ const Statistics = (props) => {
         //   ]
         }
       ];
-
-    let temp_data2_data = [];
-    const expense_by_months_array_Bar= 
-    [
-        ];
-    const sum_expense_by_months_array= [        
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        [],
-        []
-
-    ];
     
+    let month_array= ['','January','February','March','April','May','June','July','August','September','October','November','December'];
+
+
     
-
-
-    let i=0; 
-    //let colors= ["hsl(174, 70%, 50%)","hsl(180, 70%, 50%)","hsl(190, 70%, 50%)","hsl(200, 70%, 50%)","hsl(210, 70%, 50%)","hsl(100, 70%, 50%)"];
-    
-    
-    if(props.statsExpenseList){ //All months
-        console.log('Statistics: fetched statistics list \n',props.statsExpenseList);
-        props.statsExpenseList.map((month , index) => { //each month
-            console.log('statistics expense month render:', month);
-            if(month.count>0){
-                let sum=0;
-                console.log('month=',month);
-                console.log('parseInt(index)=',parseInt(index));
-                
-                month.expenses.map(exp=>{ //loop each expense in every month
-                    sum += exp.amount;
-                    expense_by_months_array[parseInt(index)].push(
-                        { 
-                                    'id': exp.expense,
-                                    'label': exp.expense,
-                                    'value': exp.amount,
-                                    'color': colors[Math.random(Math.random() * 10)] 
-                        });                   
-                console.log('expense_by_months_array[parseInt(index)]= ',expense_by_months_array[parseInt(index)]);      
-                
-                });
-                 
-                sum_expense_by_months_array[parseInt(index)].push(sum);
-                let obj= {
-                  "x": parseInt(index),
-                  "y": sum
-              };
-              console.log('obj',obj);
-              
-              temp_data2_data.push(obj);
-
-                // expense_by_months_array_Bar[parseInt(index)].push(
-                //     {
-                //         "x": index,
-                //         "y": sum
-                //     }
-                // );
-
-                // // console.log('te_Data',te_Data);
-                // // for(let temp in te_Data){
-                // //     console.log("temp " , temp);
-                // //     if(parseInt(temp)===index){
-                // //         te_Data[temp].push({"y" : sum});
-
-                // //     }
-                // // }
-                // te_Data.map(o=> {
-                //     console.log("o " , o);
-                //     if(parseInt(o)===index){
-                //         te_Data.data.o.push({"y" : sum});
-                //     }
-                // });
-               
-
-
-                }
-              });
- 
-    }
-
-    let month_slideViews= [];
-    let month_slideViews2= null;
-   
-    if(expense_by_months_array){
-        // if(expense_by_months_array)
-        let temp_sum=0;
-        console.log('expense_by_months_array ', expense_by_months_array);
-        expense_by_months_array.map((month,index,data)=> {
-            if(expense_by_months_array[index].length>0){     
-                console.log('expense_by_months_array map() month,data', month,data);
-                temp_sum+=month.value;
-                let calc_sum= sum_expense_by_months_array[index] ?  sum_expense_by_months_array[index]: 0;
-                month_slideViews.push(                    
-                        <div className={classes.Graph} key={index}>
-                            <h1>Month: {month_array[index]}</h1>
-                            <MyResponsivePie data={month} />
-                            <p className={classes.Sum}>Total {calc_sum} $</p>
-                        </div>         
-                    );
-
-
-                    //
-                    if(sum_expense_by_months_array[parseInt(index)]>0){
-                        let obj= {
-                            "x": parseInt(index),
-                            "y": sum_expense_by_months_array[parseInt(index)][0]
-                        };
-                        console.log('obj',obj);
-                        
-                        temp_data2_data.push(obj);
-                        console.log('temp_data2_data temp print',temp_data2_data);
-                        //setTemp_data2_data(temp_data2_data);
-                        
-
-
-                    }
-            }
-            }
-            ); 
-
-        };
-/* */
     let temp_data= 
     [
         {
@@ -472,6 +341,128 @@ const Statistics = (props) => {
       ]
     ;
 
+
+    let i=0;  
+    
+    if(props.statsExpenseList){ //All months
+        console.log('Statistics: fetched statistics list \n',props.statsExpenseList);
+        props.statsExpenseList.map((month , index) => { //each month
+            console.log('statistics expense month render:', month);
+            if(month.count>0){
+                let sum=0;
+                let parsedindex= parseInt(index);
+                console.log('month=',month);
+                console.log('parsedindex=',parsedindex);
+                
+                month.expenses.map(exp=>{ //loop each expense in every month
+                    sum += exp.amount;
+                    expense_by_months_array[parsedindex].push(
+                        { 
+                            'id': exp.expense,
+                            'label': exp.expense,
+                            'value': exp.amount,
+                            'color': colors[Math.random(Math.random() * 10)] 
+                        });                   
+                console.log('expense_by_months_array[parsedindex]= ',expense_by_months_array[parsedindex]);
+                });
+                 
+                sum_expense_by_months_array[parsedindex].push(sum);
+                let obj= {
+                  "x": parsedindex,
+                  "y": sum
+              };
+              console.log('obj',obj);
+              data_array.push(obj);
+              temp_data2_data.push(obj);
+
+                // expense_by_months_array_Bar[parseInt(index)].push(
+                //     {
+                //         "x": index,
+                //         "y": sum
+                //     }
+                // );
+
+                // // console.log('te_Data',te_Data);
+                // // for(let temp in te_Data){
+                // //     console.log("temp " , temp);
+                // //     if(parseInt(temp)===index){
+                // //         te_Data[temp].push({"y" : sum});
+
+                // //     }
+                // // }
+                // te_Data.map(o=> {
+                //     console.log("o " , o);
+                //     if(parseInt(o)===index){
+                //         te_Data.data.o.push({"y" : sum});
+                //     }
+                // });
+               
+
+
+                }
+              }); 
+              
+              if(data_array.length >0){
+                SecondGraph=[{
+                  "id": "Total Expense this Year ",
+                  "color": "hsl(237, 66%, 35%)",
+                  "data" : data_array
+                }]
+
+                SecondGraphDiv.push(
+                  <div className={classes.Graph}>
+                    <h1>Graph</h1>
+                    <MyResponsiveLine data={SecondGraph} />
+                </div> 
+                );  
+              }
+              console.log('SecondGraph ',SecondGraph); 
+              
+ 
+    }
+
+    let month_slideViews= [];
+    let month_slideViews2= null;
+   
+    if(expense_by_months_array){
+        // if(expense_by_months_array)
+        let temp_sum=0;
+        console.log('expense_by_months_array ', expense_by_months_array);
+        expense_by_months_array.map((month,index,data)=> {
+            if(expense_by_months_array[index].length>0){     
+                console.log('expense_by_months_array map() month,data', month,data);
+                temp_sum+=month.value;
+                let calc_sum= sum_expense_by_months_array[index] ?  sum_expense_by_months_array[index]: 0;
+                month_slideViews.push(                    
+                        <div className={classes.Graph} key={index}>
+                            <h1>Month: {month_array[index]}</h1>
+                            <MyResponsivePie data={month} />
+                            <p className={classes.Sum}>Total {calc_sum} $</p>
+                        </div>         
+                    );
+
+
+                    //
+                    // // if(sum_expense_by_months_array[parseInt(index)]>0){
+                    // //     let obj= {
+                    // //         "x": parseInt(index),
+                    // //         "y": sum_expense_by_months_array[parseInt(index)][0]
+                    // //     };
+                    // //     console.log('obj',obj);
+                        
+                    // //     temp_data2_data.push(obj);
+                    // //     console.log('temp_data2_data temp print',temp_data2_data);
+                    // //     //setTemp_data2_data(temp_data2_data); 
+                    // // }
+            }
+            }
+            ); 
+
+        };
+
+        /**/
+/* */
+
    // if(expense_by_months_array_Bar){
    //     let temp= expense_by_months_array_Bar[0].data;
    
@@ -561,49 +552,22 @@ const Statistics = (props) => {
     console.log('expense_by_months_array pre renbder',expense_by_months_array);
     return (
         <div className={classes.Statistics_Container}>
-              <p> Statistics</p>
+             <p> Statistics</p>
              <p> In This Section you can see you history of expenses </p>
- 
-               {/* <SlideView> 
-                <div className={classes.Graph}>
-                    <MyResponsivePie data={expense_by_months_array[1]} />
-                     <p>Total {sum} $</p>
-                </div>
-                </SlideView>  */}
-
-             {/*   <div className={classes.Graph}>
-                    <MyResponsivePie data={data} />
-                     <p>Total {sum} $</p>
-                </div> 
-               </SlideView>  */}
                <div className={classes.Graph_container}>
                 <SlideView>
                   {month_slideViews.length >0 ?  (month_slideViews) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
               </SlideView>
-
                </div>
-               
-              {/* {month_slideViews2 ? (<div className={classes.Graph_container}>
+
+               {/* {month_slideViews2 ? (
                 <SlideView>
                 {month_slideViews2 ?  month_slideViews2: (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
               </SlideView>              
-               </div>) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)} */}
-               {month_slideViews2 ? (
-                <SlideView>
-                {month_slideViews2 ?  month_slideViews2: (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
-              </SlideView>              
-               ) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)}
+               ) : (<p>Sorry , no history records was found. <br></br> You need to add Expenses first</p>)} */}
 
-
-             {/* <p> Statistics</p>
-             <p> In This Section you can see you history of expenses </p>
+               {SecondGraphDiv? SecondGraphDiv: <p>Null</p>}
  
-             <div className={classes.Graph}>
-                 <MyResponsivePie data={data} />
-                <p>Total {sum} $</p>
-             </div>
-             <div className={classes.Table}>
-            </div> */}
         </div>
     );
 } 
@@ -620,7 +584,6 @@ const mapStateToProps = state => {
 
   const mapDispatchToProps = dispatch => {
     return {
-        // onFetchExpenses : (token,userId) => dispatch(actions.fetcExpenses(token,userId)),
         onFetchStatisticsExpenses : (token,userId) => dispatch(actions.fetcStatisticsExpenses(token,userId))
        };
   };
